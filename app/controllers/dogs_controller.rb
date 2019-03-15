@@ -4,8 +4,7 @@ class DogsController < ApplicationController
   # GET /dogs
   # GET /dogs.json
   def index
-    puts "checking if the user is signed in", user_signed_in?
-    @dogs = Dog.all
+    @dogs = Dog.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /dogs/1
