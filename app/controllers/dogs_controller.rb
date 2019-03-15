@@ -15,32 +15,34 @@ class DogsController < ApplicationController
   # GET /dogs/new
   def new
     @dog = Dog.new
+    if user_signed_in?
+        render :new
+      else
+        flash[:notice] = "You must be signed in to create a dog"
+        redirect_to dogs_path
+      end
   end
 
   # GET /dogs/1/edit
   def edit
-    respond_to do |format|
       if current_user == @dog.user
-        format.html {render :edit}
+        render :edit
       else
-        format.html { redirect_to @dog, notice: 'You are not authorized to do that' }
-        format.json { render json: { message: 'You are not authorized to do that'}, status: :unauthorized }
+        redirect_to dog_path(@dog)
       end
-    end
   end
 
   # POST /dogs
   # POST /dogs.json
   def create
-    @dog = Dog.new(dog_params)
-
+    @dog = Dog.new(dog_params).user = current_user
     respond_to do |format|
       if @dog.save
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
         format.html { redirect_to @dog, notice: 'Dog was successfully created.' }
         format.json { render :show, status: :created, location: @dog }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @dog.errors, status: :unprocessable_entity }
       end
     end
@@ -49,7 +51,6 @@ class DogsController < ApplicationController
   # PATCH/PUT /dogs/1
   # PATCH/PUT /dogs/1.json
   def update
-    puts params
     respond_to do |format|
       if @dog.update(dog_params)
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
