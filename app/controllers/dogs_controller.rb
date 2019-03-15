@@ -19,10 +19,14 @@ class DogsController < ApplicationController
 
   # GET /dogs/1/edit
   def edit
-    puts '================================================'
-    puts "checking if the user is signed in", user_signed_in?
-    puts '================================================'
-    # @dog = Dog.find(params[:id])
+    respond_to do |format|
+      if current_user == @dog.user
+        format.html {render :edit}
+      else
+        format.html { redirect_to @dog, notice: 'You are not authorized to do that' }
+        format.json { render json: { message: 'You are not authorized to do that'}, status: :unauthorized }
+      end
+    end
   end
 
   # POST /dogs
@@ -33,7 +37,6 @@ class DogsController < ApplicationController
     respond_to do |format|
       if @dog.save
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
-
         format.html { redirect_to @dog, notice: 'Dog was successfully created.' }
         format.json { render :show, status: :created, location: @dog }
       else
