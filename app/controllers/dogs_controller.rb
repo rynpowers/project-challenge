@@ -36,14 +36,15 @@ class DogsController < ApplicationController
   # POST /dogs
   # POST /dogs.json
   def create
-    @dog = Dog.new(dog_params).user = current_user
+    @dog = Dog.new(dog_params)
+    @dog.user = current_user
     respond_to do |format|
       if @dog.save
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
         format.html { redirect_to @dog, notice: 'Dog was successfully created.' }
         format.json { render :show, status: :created, location: @dog }
       else
-        format.html { render :index }
+        format.html { redirect_to new_dog_url, notice: "There was a problem creating your dog" }
         format.json { render json: @dog.errors, status: :unprocessable_entity }
       end
     end
@@ -55,11 +56,10 @@ class DogsController < ApplicationController
     respond_to do |format|
       if @dog.update(dog_params)
         @dog.images.attach(params[:dog][:image]) if params[:dog][:image].present?
-
         format.html { redirect_to @dog, notice: 'Dog was successfully updated.' }
         format.json { render :show, status: :ok, location: @dog }
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_dog_url, notice: 'There was an error editing your dog' }
         format.json { render json: @dog.errors, status: :unprocessable_entity }
       end
     end

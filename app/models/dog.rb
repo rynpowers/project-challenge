@@ -5,10 +5,6 @@ class Dog < ApplicationRecord
   validate :image_type
 
   def image_type
-    if images.attached? == false
-      errors.add(:images, 'are missing!')
-    end
-
     images.each do |image|
       if !image.content_type.in?(%('image/jpeg', 'image/png'))
         image.purge_later
