@@ -28,6 +28,7 @@ class DogsController < ApplicationController
       if current_user == @dog.user
         render :edit
       else
+        flash[:notice] = "You must be the dog owner to do that"
         redirect_to dog_path(@dog)
       end
   end
