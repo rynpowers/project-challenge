@@ -1,6 +1,12 @@
-<a href="<%= url_for(dog) %>">
-  <article>
-    <h2 class="dog-name"><%= dog.name %></h2>
-    <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
-  </article>
-</a>
+<div>
+  <a href="<%= url_for(dog) %>">
+    <article>
+      <h2 class="dog-name"><%= dog.name %></h2>
+      <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
+    </article>
+  </a>
+  <div style="display: flex; align-items: center; width: 135px; justify-content: space-between; padding: 10px; flex-direction: row-reverse">
+    <span><%= dog.likes.length %> likes</span>
+    <button class="btn btn-primary">like</buton>
+  </div>
+</div>
