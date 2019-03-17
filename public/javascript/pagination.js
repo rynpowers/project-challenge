@@ -111,7 +111,16 @@ $(function() {
   const addLikeButtonListener = () => {
     Array.from(document.querySelectorAll('.btn-like')).forEach(btn => {
       btn.addEventListener('click', function() {
-        console.log(this.dataset.dog);
+        fetch(`/dogs/${this.dataset.dog}/like.json`, {
+          method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+          headers: {
+            'Content-Type': 'application/json',
+            // "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: JSON.stringify({ data: 'hello' }), // body data type must match "Content-Type" header
+        })
+          .then(res => res.json())
+          .catch(err => console.log(err));
       });
     });
   };
