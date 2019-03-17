@@ -5,6 +5,11 @@ class DogsController < ApplicationController
   # GET /dogs.json
   def index
     @dogs = Dog.includes(:likes).paginate(page: params[:page], per_page: 5)
+
+    respond_to do |format|
+      format.html { render 'index'}
+      format.json
+    end
   end
 
   # GET /dogs/1
