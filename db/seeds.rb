@@ -77,6 +77,12 @@ dogs.each.with_index do |dog, i|
   dog = Dog.find_or_create_by(name: dog[:name], description: dog[:description], user_id: user )
   directory_name = File.join(Rails.root, 'db', 'seed', "#{dog[:name].downcase}", "*")
 
+  users.each_with_index do |u, id|
+    if (id + 1) != user
+      Like.create(user_id: id + 1, dog_id: dog.id)
+    end
+  end
+
   Dir.glob(directory_name).each do |filename|
     if !dog.images.any?{|i| i.filename == filename}
       dog.images.attach(io: File.open(filename), filename: filename.split("/").pop)
