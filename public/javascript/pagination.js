@@ -11,9 +11,13 @@ $(function() {
 
   const renderBtn = dog => {
     return `
-    <button class="btn btn-primary btn-like" data-dog=${dog.id}>${
-      dog.user_liked ? 'unlike' : 'like'
-    }</buton>`;
+    <button
+      class="btn btn-primary btn-like"
+      data-dog=${dog.id}
+      data-method=${dog.user_liked ? 'DELETE' : 'POST'}
+      >
+      ${dog.user_liked ? 'unlike' : 'like'}
+    </buton>`;
   };
 
   const renderDog = dog => {
@@ -54,10 +58,6 @@ $(function() {
       })
       .join('');
 
-  const renderDogs = () => {
-    root.innerHTML = state.dogs.map(dog => renderDog(dog)).join('');
-  };
-
   const renderPaginator = () => {
     paginatorContainer.innerHTML = renderPaginatorWithTabs(
       createTabs(state.pages)
@@ -81,7 +81,14 @@ $(function() {
   const getActive = () =>
     DOM.listItems.filter(li => li.classList.contains('active'))[0].dataset.page;
 
-  const addPaginatorListener = () => {
+  const toggleLike = btn => {
+    const dog = state.dogs.filter(d => d.id == btn.dataset.dog)[0];
+    console.log(dog);
+    dog.user_liked ? (dog.likes -= 1) : (dog.likes += 1);
+    dog.user_liked = !dog.user_liked;
+  };
+
+  const addPaginatorListener = fn => {
     document.querySelector('ul.pagination').addEventListener('click', e => {
       e.preventDefault();
       const isPage = e.target.dataset.page;
@@ -102,27 +109,33 @@ $(function() {
         .then(res => res.json())
         .then(newState => {
           state.dogs = newState.dogs;
-          renderDogs();
+          fn();
         })
         .catch(err => console.log(err));
     });
   };
 
-  const addLikeButtonListener = () => {
+  const addLikeButtonListener = fn => {
     Array.from(document.querySelectorAll('.btn-like')).forEach(btn => {
       btn.addEventListener('click', function() {
-        fetch(`/dogs/${this.dataset.dog}/like.json`, {
-          method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-          headers: {
-            'Content-Type': 'application/json',
-            // "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: JSON.stringify({ data: 'hello' }), // body data type must match "Content-Type" header
-        })
-          .then(res => res.json())
-          .catch(err => console.log(err));
+        const method = this.dataset.method;
+        const url = `/dogs/${this.dataset.dog}/like.json`;
+        const options = {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: 'hello' }),
+        };
+        method === 'POST'
+          ? fetch(url, { method, ...options }).catch(err => console.log(err))
+          : fetch(url, { method }).catch(err => console.log(err));
+        toggleLike(this);
+        fn();
       });
     });
+  };
+
+  const renderDogs = () => {
+    root.innerHTML = state.dogs.map(dog => renderDog(dog)).join('');
+    addLikeButtonListener(renderDogs);
   };
 
   fetch('/dogs.json?page=1&sorted=false')
@@ -133,8 +146,7 @@ $(function() {
       renderPaginator();
       DOM.linkItems = Array.from(document.querySelectorAll('ul.pagination a'));
       DOM.listItems = Array.from(document.querySelectorAll('ul.pagination li'));
-      addPaginatorListener();
-      addLikeButtonListener();
+      addPaginatorListener(renderDogs);
     })
     .catch(e => console.log(e));
 });
