@@ -33,7 +33,7 @@ $(function() {
       </a>
       <div style="display: flex; align-items: center; width: 135px; justify-content: space-between; padding: 10px; flex-direction: row-reverse">
         <span>${dog.likes} likes</span>
-        ${state.signed_in ? renderBtn(dog) : ''}
+        ${state.signed_in && !dog.isOwner ? renderBtn(dog) : ''}
       </div>
     </div>`;
   };
@@ -147,6 +147,7 @@ $(function() {
       DOM.linkItems = Array.from(document.querySelectorAll('ul.pagination a'));
       DOM.listItems = Array.from(document.querySelectorAll('ul.pagination li'));
       addPaginatorListener(renderDogs);
+      console.log(state);
     })
     .catch(e => console.log(e));
 });
