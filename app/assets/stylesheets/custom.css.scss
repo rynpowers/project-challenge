@@ -1,6 +1,12 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .section-carousel {
   height: 100%;
   width: 100%;
@@ -37,6 +43,13 @@ a.left.carousel-control {
   background-color: #ecf0f1;
   opacity: 1;
   background-image: none;
+}
+
+.feed-item {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height: 500px;
 }
 
 .add {
