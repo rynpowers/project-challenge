@@ -83,7 +83,6 @@ $(function() {
 
   const toggleLike = btn => {
     const dog = state.dogs.filter(d => d.id == btn.dataset.dog)[0];
-    console.log(dog);
     dog.user_liked ? (dog.likes -= 1) : (dog.likes += 1);
     dog.user_liked = !dog.user_liked;
   };
@@ -134,7 +133,13 @@ $(function() {
   };
 
   const renderDogs = () => {
-    root.innerHTML = state.dogs.map(dog => renderDog(dog)).join('');
+    root.innerHTML = state.dogs
+      .map((dog, i) => {
+        return (i + 1) % 2 === 0
+          ? `${renderDog(dog)}<div class="add"></div>`
+          : renderDog(dog);
+      })
+      .join('');
     addLikeButtonListener(renderDogs);
   };
 
