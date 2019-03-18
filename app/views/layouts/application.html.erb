@@ -9,9 +9,9 @@
     <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </head>
   <body>
-    <%= render partial: 'layouts/navbar' %>
     <div id="layout">
-      <div id="main">
+    <%= render partial: 'layouts/navbar' %>
+      <div id="main" class="container">
         <div class="notifications">
           <p class="notice"><%= notice %></p>
           <p class="alert"><%= alert %></p>
