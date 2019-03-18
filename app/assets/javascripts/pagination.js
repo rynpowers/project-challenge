@@ -26,9 +26,11 @@ $(function() {
       <a href=${dog.url}>
         <article>
           <h2 class="dog-name">${dog.name}</h2>
-          <img class="dog-photo" src=${
-            dog.images[0]
-          } style="width: 300px; height: auto;"/>
+          <div class="feed-item">
+            <img class="dog-photo" src=${
+              dog.images[0]
+            } style="width: auto; height: 100%;"/>
+          </div>
         </article>
       </a>
       <div style="display: flex; align-items: center; width: 135px; justify-content: space-between; padding: 10px; flex-direction: row-reverse">
@@ -136,7 +138,7 @@ $(function() {
     root.innerHTML = state.dogs
       .map((dog, i) => {
         return (i + 1) % 2 === 0
-          ? `${renderDog(dog)}<div class="add"></div>`
+          ? `${renderDog(dog)}<div class="feed-item add"></div>`
           : renderDog(dog);
       })
       .join('');
@@ -152,7 +154,6 @@ $(function() {
       DOM.linkItems = Array.from(document.querySelectorAll('ul.pagination a'));
       DOM.listItems = Array.from(document.querySelectorAll('ul.pagination li'));
       addPaginatorListener(renderDogs);
-      console.log(state);
     })
     .catch(e => console.log(e));
 });
