@@ -152,7 +152,6 @@ $(function() {
       DOM.linkItems = Array.from(document.querySelectorAll('ul.pagination a'));
       DOM.listItems = Array.from(document.querySelectorAll('ul.pagination li'));
       addPaginatorListener(renderDogs);
-      console.log(state);
     })
     .catch(e => console.log(e));
 });
