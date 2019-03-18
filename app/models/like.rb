@@ -3,15 +3,20 @@ class Like < ApplicationRecord
   belongs_to :user
 
   validate :not_owner
+  validate :no_duplicates
 
   private
   def not_owner
-    puts "==================="
-    puts "validating", Dog.find(self.dog_id).user_id, self.user_id
-    puts "==================="
     if Dog.find(self.dog_id).user_id == self.user_id
-      puts "throwing error"
       errors.add("you can't like your own pet")
+    end
+  end
+
+  def no_duplicates
+    user_likes = Dog.find(self.dog_id).likes.select { |like| like.user_id == self.user_id}
+
+    if !user_likes.empty?
+      errors.add("No duplicate likes")
     end
   end
 end

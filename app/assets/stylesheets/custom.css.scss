@@ -1,2 +1,10 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+
+.add {
+  background-image: url('/assets/ad.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 300px;
+  height: 300px;
+}
