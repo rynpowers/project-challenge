@@ -20,4 +20,21 @@
 
 .item {
   height: 100%;
+  background-color: #ecf0f1;
+}
+
+.item.active {
+  background-color: #ecf0f1;
+}
+
+a.right.carousel-control {
+  background-color: #ecf0f1;
+  opacity: 1;
+  background-image: none;
+}
+
+a.left.carousel-control {
+  background-color: #ecf0f1;
+  opacity: 1;
+  background-image: none;
 }
