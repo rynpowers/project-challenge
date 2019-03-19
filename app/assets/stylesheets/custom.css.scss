@@ -27,9 +27,29 @@ body {
   z-index: 1;
 }
 
+.notifications {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+// edit form
+.simple_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.simple_form img {
+  width: 300px;
+  height: auto;
+}
+
 // carousel styles
 
 .section-carousel {
+  margin-top: 50px;
   height: 100%;
   width: 100%;
   display: flex;
@@ -91,6 +111,17 @@ a.left.carousel-control {
   align-items: center;
 }
 
+// paginator
+
+.section-feed {
+  margin-top: 80px;
+}
+
+#paginator-container {
+  display: flex;
+  justify-content: center;
+}
+
 // article feed item
 
 .feed-item {
@@ -98,18 +129,28 @@ a.left.carousel-control {
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
-  height: 450px;
+  height: 350px;
   padding: 10px;
-  margin: 5px;
+  margin: 20px 5px;
   background-color: #fff;
+}
+
+.feed-item article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+article h2 {
+  margin: 10px 0;
 }
 
 .feed-image {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   background-color: #fff;
 }
 
@@ -121,22 +162,4 @@ a.left.carousel-control {
 
 .dog-name {
   text-align: center;
-}
-
-@media only screen and (max-width: 750px) {
-  .carousel-container {
-    height: 450px;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .carousel-container {
-    height: 400px;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .carousel-container {
-    height: 300px;
-  }
 }
