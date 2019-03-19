@@ -12,7 +12,7 @@ $(function() {
   const renderBtn = dog => {
     return `
     <button
-      class="btn btn-primary btn-like"
+      class="btn-like"
       data-dog=${dog.id}
       data-method=${dog.user_liked ? 'DELETE' : 'POST'}
       >
@@ -153,7 +153,6 @@ $(function() {
     .then(res => res.json())
     .then(newState => {
       state = newState;
-      console.log(state);
       renderDogs();
       renderPaginator();
       DOM.linkItems = Array.from(document.querySelectorAll('ul.pagination a'));
