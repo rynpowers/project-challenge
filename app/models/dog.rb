@@ -1,4 +1,6 @@
 class Dog < ApplicationRecord
+  before_destroy :destroy_likes
+
   has_many_attached :images
   belongs_to :user
 
@@ -15,4 +17,8 @@ class Dog < ApplicationRecord
       end
     end
   end
+
+   def destroy_likes
+     self.likes.destroy_all
+   end
 end
