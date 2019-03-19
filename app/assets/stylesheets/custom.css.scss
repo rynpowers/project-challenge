@@ -1,6 +1,10 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 
+body {
+  position: relative;
+}
+
 #layout {
   background-color: #ecf0f1;
   min-height: 100vh;
@@ -12,46 +16,70 @@
   align-items: center;
 }
 
+#myCarousel {
+  height: 100%;
+  display: flex;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
 // carousel styles
 
 .section-carousel {
   height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-bottom: 50px;
 }
 
 .carousel-container {
-  width: 1000px;
+  height: 500px;
+  width: 100%;
+  max-width: 500px;
   padding: 5px;
 }
 
-.item {
-  height: 500px;
-  background-color: #ecf0f1;
+.item,
+.active {
+  height: 100%;
+  background-color: black;
 }
 
 .carousel-inner > .item > img {
-  height: 100%;
-  margin: 0 auto;
+  height: auto;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .item.active {
-  background-color: #ecf0f1;
+  background-color: black;
 }
 
 a.right.carousel-control {
-  background-color: #ecf0f1;
+  background-color: transparent;
   opacity: 1;
   background-image: none;
 }
 
 a.left.carousel-control {
-  background-color: #ecf0f1;
+  background-color: transparent;
   opacity: 1;
   background-image: none;
+}
+
+.user-links {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
 }
 
 // article feed
@@ -95,14 +123,20 @@ a.left.carousel-control {
   text-align: center;
 }
 
+@media only screen and (max-width: 750px) {
+  .carousel-container {
+    height: 450px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
-  .item {
+  .carousel-container {
     height: 400px;
   }
 }
 
 @media only screen and (max-width: 400px) {
-  .item {
+  .carousel-container {
     height: 300px;
   }
 }
