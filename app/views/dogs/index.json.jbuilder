@@ -7,5 +7,6 @@ json.dogs @dogs do |dog|
   json.isOwner user_signed_in? ? current_user.id == dog.user_id : false
 end
 json.signed_in user_signed_in?
+json.ad '/assets/ad.jpg'
 json.pages @dogs.total_entries / 5 + (@dogs.total_entries % 5)
 

@@ -22,11 +22,11 @@ $(function() {
 
   const renderDog = dog => {
     return `
-    <div>
+    <div class="feed-item">
       <a href=${dog.url}>
         <article>
           <h2 class="dog-name">${dog.name}</h2>
-          <div class="feed-item">
+          <div class="feed-image">
             <img class="dog-photo" src=${
               dog.images[0]
             } style="width: auto; height: 100%;"/>
@@ -138,7 +138,11 @@ $(function() {
     root.innerHTML = state.dogs
       .map((dog, i) => {
         return (i + 1) % 2 === 0
-          ? `${renderDog(dog)}<div class="feed-item add"></div>`
+          ? `${renderDog(dog)}<div class="feed-item">
+                <div class="feed-image">
+                  <img class="ad" src=${state.ad} />
+                </div>
+              </div>`
           : renderDog(dog);
       })
       .join('');
@@ -149,6 +153,7 @@ $(function() {
     .then(res => res.json())
     .then(newState => {
       state = newState;
+      console.log(state);
       renderDogs();
       renderPaginator();
       DOM.linkItems = Array.from(document.querySelectorAll('ul.pagination a'));
